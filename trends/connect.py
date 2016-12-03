@@ -1,5 +1,23 @@
+import json as simplejson
+import urllib
+import pymongo
+import threading
 import config
+import os,json
 
+def refresh():
+    config.collection.remove({})
+    threading.Timer(86400,refresh).start()
+
+def get_json_data(data_url):
+    if (config.collection.find_one({"url": data_url}) is not None):
+        return config.collection.find_one({"url": data_url})["jsonData"]
+    # Fetch it from MongoDB otherwise
+    else:
+        response = urllib.urlopen(data_url)
+        jsonData = simplejson.load(response)
+        config.collection.insert({'url': data_url, 'jsonData': jsonData})
+        return jsonData
 
 def initialize():
     if not config.initialized:
@@ -17,16 +35,5 @@ def initialize():
         config.initialized=True
         refresh()
 
-def refresh():
-    config.collection.remove({})
-    threading.Timer(86400,refresh).start()
 
-def get_json_data(data_url):
-    if (config.collection.find_one({"url": data_url}) is not None):
-        return config.collection.find_one({"url": data_url})["jsonData"]
-    # Fetch it from MongoDB otherwise
-    else:
-        response = urllib2.urlopen(data_url)
-        jsonData = simplejson.load(response)
-        config.collection.insert({'url': data_url, 'jsonData': jsonData})
-        return jsonData
+
