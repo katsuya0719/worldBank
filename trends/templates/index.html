@@ -1,0 +1,45 @@
+{% block content %}
+<script src="//code.highcharts.com/highcharts.js"></script>
+<script src="//code.highcharts.com/modules/exporting.js"></script>
+
+<h1>Project</h1>
+<ul>
+
+<table class="table">
+<thead>
+	<tr>
+		<th>Project</th>
+		<th>Version</th>
+		<th>Program</th>
+		<th>Location</th>
+		<th>Green certificate</th>
+		<th>User</th>
+	</tr>
+</thead>
+<tbody>
+{% for project in object_list %}
+	<tr>
+		<td><a href="{% url 'detail' project.pk %}">{{project.project}}</a></td>
+		<td>{{project.version}}</td>
+		<td>{{project.program}}</td>
+		<td>{{project.location}}</td>
+		<td>{{project.certificate}}</td>
+		<td>{{project.user}}</td>
+	</tr>
+</tbody>
+{% empty %}
+    <li>No projects yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}
+<script>
+	$.ajax({
+                url : "/trends/fetch_and_draw_data",
+                type : "GET",
+                dataType: "json",
+                data : {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    country : country,
+                    metric : metric
+                },
+</script>
