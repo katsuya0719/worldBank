@@ -3,11 +3,12 @@ from django.http import HttpResponse
 from django.template import loader
 from django.template import RequestContext
 import json as simplejson
-import trends.connect
+import trends.connect as connect
 
 # Create your views here.
 def index(request):
-    template=loader.get_template('trends/index.html')
+    print(request)
+    template=loader.get_template('index.html')
     context = RequestContext(request)
     return HttpResponse(template.render(context))
 

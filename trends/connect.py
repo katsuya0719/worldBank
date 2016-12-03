@@ -2,7 +2,7 @@ import json as simplejson
 import urllib
 import pymongo
 import threading
-import config
+#import config
 import os,json
 
 def refresh():

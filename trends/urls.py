@@ -17,7 +17,8 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from trends import views
 
+app_name='trends'
 urlpatterns = [
     url(r'^$', views.index,name='index'),
-    url(r'^fetch_and_fraw_data/',views.fetch_and_fraw_data,name='fetch_and_fraw_data'),
+    url(r'^fetch_and_fraw_data/',views.fetch_and_draw_data,name='fetch_and_fraw_data'),
 ]
