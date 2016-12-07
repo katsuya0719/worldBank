@@ -21,6 +21,7 @@ def get_json_data(data_url):
 
 def initialize():
     if not config.initialized:
+        """
         vcap_config=os.environ.get("VCAP_SERVICES")
         print(vcap_config)
         decoded_config=json.loads(vcap_config)
@@ -29,8 +30,10 @@ def initialize():
             if key.startswith('mongodb'):
                 mongo_creds=decoded_config[key][0]['credentials']
         mongo_url=str(mongo_creds['url'])
+        """
 
-        client=pymongo.MongoClient(mongo_url)
+        #client=pymongo.MongoClient(mongo_url)
+        client=pymongo.MongoClient()
         config.db=config.client['db']
         config.collection=config.db['mycollection']
         config.collection.remove({})
