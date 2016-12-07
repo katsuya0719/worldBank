@@ -22,6 +22,7 @@ def get_json_data(data_url):
 def initialize():
     if not config.initialized:
         vcap_config=os.environ.get("VCAP_SERVICES")
+        print(vcap_config)
         decoded_config=json.loads(vcap_config)
         print(decoded_config)
         for key,value in decoded_config.iteritems():
