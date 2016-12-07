@@ -2,7 +2,7 @@ import json as simplejson
 import urllib
 import pymongo
 import threading
-#import config
+from trends import config
 import os,json
 
 def refresh():
@@ -23,6 +23,7 @@ def initialize():
     if not config.initialized:
         vcap_config=os.environ.get("VCAP_SERVICES")
         decoded_config=json.loads(vcap_config)
+        print(decoded_config)
         for key,value in decoded_config.iteritems():
             if key.startswith('mongodb'):
                 mongo_creds=decoded_config[key][0]['credentials']

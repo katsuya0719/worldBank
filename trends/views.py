@@ -4,12 +4,15 @@ from django.template import loader
 from django.template import RequestContext
 import json as simplejson
 import trends.connect as connect
+import logging
+
 
 # Create your views here.
 def index(request):
     print(request)
     template=loader.get_template('index.html')
     context = RequestContext(request)
+    print(context)
     return HttpResponse(template.render(context))
 
 countries_mapping = {"India":"IND", "Pakistan":"PAK", "USA":"US", "Italy":"IT","Switzerland":"CH", "Japan":"JP" , "China":"CN", "UK":"GBR"}
@@ -36,6 +39,7 @@ metric_full_name_mapping = {
   }
 
 def fetch_and_draw_data(request):
+    print(request)
     connect.initialize()
     country = request.GET.get('country', 'USA')
     metric = request.GET.get('metric', 'Total')
@@ -43,6 +47,7 @@ def fetch_and_draw_data(request):
     country_code = countries_mapping[country]
     indicator_code = indicators_mapping[metric]
     data_url = get_url(country_code, indicator_code)
+    print(data_url)
     json_from_cache = connect.get_json_data(data_url)
 
     metric_full_name = metric_full_name_mapping[metric]
