@@ -40,16 +40,16 @@ metric_full_name_mapping = {
 
 def fetch_and_draw_data(request):
     print(request)
-    connect.initialize()
+    #connect.initialize()
     country = request.GET.get('country', 'USA')
     metric = request.GET.get('metric', 'Total')
 
     country_code = countries_mapping[country]
     indicator_code = indicators_mapping[metric]
     data_url = get_url(country_code, indicator_code)
-    print(data_url)
+    print("data_url is"+str(data_url))
     json_from_cache = connect.get_json_data(data_url)
-
+    print("json_from_cache"+str(json_from_cache))
     metric_full_name = metric_full_name_mapping[metric]
     graphTitle = "%s Energy Consumption Data in %s" % (metric_full_name, country)
     xAxisTitle = "Testing"
@@ -65,7 +65,6 @@ def fetch_and_draw_data(request):
                  "xAxisTitle": xAxisTitle, "yAxisTitle": yAxisTitle, "yAxisValues": yAxisValues}
     return HttpResponse(simplejson.dumps(data_list))
 
-def get_url():
-    def get_url(country_code, indicators):
-        return ("http://api.worldbank.org/countries/%s/indicators/%s?per_page=10&date=2000:2010&format=json" % (
+def get_url(country_code, indicators):
+    return ("http://api.worldbank.org/countries/%s/indicators/%s?per_page=10&date=2000:2010&format=json" % (
         country_code, indicators));
